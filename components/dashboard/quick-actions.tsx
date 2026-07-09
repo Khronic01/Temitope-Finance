@@ -17,11 +17,11 @@ export default function QuickActions() {
     },
     {
       id: 2,
-      title: 'New Payment',
-      description: 'Send money to Chinese suppliers',
+      title: 'CNY Payout',
+      description: 'Send Chinese Yuan to suppliers',
       icon: Send,
-      color: 'bg-green-50 text-green-600',
-      onClick: () => router.push('/send-money'),
+      color: 'bg-emerald-50 text-emerald-600',
+      onClick: () => router.push('/cny-payout'),
     },
     {
       id: 3,
