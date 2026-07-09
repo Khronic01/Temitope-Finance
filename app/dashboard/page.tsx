@@ -15,6 +15,7 @@ import PaymentStatusChart from '@/components/dashboard/payment-status-chart'
 import PaymentVolumeChart from '@/components/dashboard/payment-volume-chart'
 import QuickActions from '@/components/dashboard/quick-actions'
 import RecentTransactions from '@/components/dashboard/recent-transactions'
+import { CNYStatsWidget } from '@/components/dashboard/cny-stats-widget'
 
 const kpis = [
   {
@@ -91,6 +92,10 @@ export default function DashboardPage() {
 
         <section className="mb-6">
           <QuickActions />
+        </section>
+
+        <section className="mb-6">
+          <CNYStatsWidget />
         </section>
 
         <section className="grid grid-cols-1 gap-6 xl:grid-cols-3">

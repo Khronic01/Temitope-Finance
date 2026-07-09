@@ -5,7 +5,6 @@ import Link from 'next/link'
 import {
   LayoutDashboard,
   Wallet,
-  Send,
   TrendingUp,
   History,
   CheckSquare,
@@ -17,7 +16,6 @@ import {
 const menuItems = [
   { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
   { name: 'Wallet', icon: Wallet, href: '/wallet' },
-  { name: 'Payments', icon: Send, href: '/payments' },
   { name: 'CNY Payout', icon: TrendingUp, href: '/cny-payout' },
   { name: 'Transactions', icon: History, href: '/transactions' },
   { name: 'Audit Reports & Compliance', icon: CheckSquare, href: '/audit-reports' },

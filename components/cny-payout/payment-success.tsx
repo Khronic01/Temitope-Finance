@@ -1,7 +1,9 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { CheckCircle2, Download, Truck, RotateCcw } from 'lucide-react'
+import { addTransaction } from '@/lib/transaction-storage'
 import type { PaymentMethod } from './payment-methods'
 import type { RecipientData } from './recipient-form'
 
@@ -31,6 +33,32 @@ export default function PaymentSuccess({
   isNewRecipient,
   onNewPayment,
 }: PaymentSuccessProps) {
+  // Save transaction to storage on component mount
+  useEffect(() => {
+    const paymentMethodMap: Record<PaymentMethod, string> = {
+      bank: 'Bank Transfer',
+      alipay: 'Alipay',
+      wechat: 'WeChat Pay',
+    }
+
+    addTransaction({
+      type: 'payout',
+      amount: amountNGN,
+      currency: 'CNY',
+      status: 'completed',
+      recipientName: recipient.name,
+      recipientBank: recipient.bank || 'Alipay/WeChat',
+      accountNumber: recipient.accountNumber,
+      paymentMethod: paymentMethodMap[paymentMethod],
+      exchangeRate,
+      fees: totalFees,
+      timestamp: Date.now(),
+      date: new Date().toLocaleDateString(),
+      description: `CNY Payout to ${recipient.name} - ${amountCNY.toFixed(2)} CNY`,
+      reference,
+    })
+  }, [reference])
+
   return (
     <div className="text-center">
       <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">

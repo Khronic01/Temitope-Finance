@@ -1,14 +1,18 @@
 'use client'
 
+import { useState } from 'react'
 import FinTechSidebar from '@/components/fintech-sidebar'
 import FinTechTopNav from '@/components/fintech-topnav'
 import BalanceDisplay from '@/components/wallet/balance-display'
 import FundingHistory from '@/components/wallet/funding-history'
 import StatementExport from '@/components/wallet/statement-export'
 import TransactionHistory from '@/components/wallet/transaction-history'
+import FundWalletModal from '@/components/wallet/fund-wallet-modal'
 import { Download, Plus, ReceiptText, WalletCards } from 'lucide-react'
 
 export default function WalletPage() {
+  const [isFundModalOpen, setIsFundModalOpen] = useState(false)
+
   return (
     <div className="flex h-screen bg-background">
       <FinTechSidebar />
@@ -31,7 +35,10 @@ export default function WalletPage() {
                   </div>
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 lg:min-w-[520px]">
-                    <button className="flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-neutral-950 transition-colors hover:bg-neutral-100">
+                    <button
+                      onClick={() => setIsFundModalOpen(true)}
+                      className="flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-neutral-950 transition-colors hover:bg-neutral-100"
+                    >
                       <Plus className="h-4 w-4" />
                       Fund Wallet
                     </button>
@@ -77,6 +84,11 @@ export default function WalletPage() {
           </div>
         </main>
       </div>
+
+      <FundWalletModal
+        isOpen={isFundModalOpen}
+        onClose={() => setIsFundModalOpen(false)}
+      />
     </div>
   )
 }
