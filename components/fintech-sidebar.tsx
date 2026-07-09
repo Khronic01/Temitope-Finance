@@ -6,11 +6,9 @@ import {
   LayoutDashboard,
   Wallet,
   Send,
-  Users,
   TrendingUp,
   History,
   CheckSquare,
-  Lock,
   Bell,
   Settings,
   LogOut,
@@ -20,11 +18,9 @@ const menuItems = [
   { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
   { name: 'Wallet', icon: Wallet, href: '/wallet' },
   { name: 'Payments', icon: Send, href: '/payments' },
-  { name: 'Suppliers', icon: Users, href: '/suppliers' },
-  { name: 'FX Quotes', icon: TrendingUp, href: '/fx-quotes' },
+  { name: 'CNY Payout', icon: TrendingUp, href: '/cny-payout' },
   { name: 'Transactions', icon: History, href: '/transactions' },
-  { name: 'Audit Reports', icon: CheckSquare, href: '/audit-reports' },
-  { name: 'Compliance', icon: Lock, href: '/compliance' },
+  { name: 'Audit Reports & Compliance', icon: CheckSquare, href: '/audit-reports' },
 ]
 
 const bottomItems = [
