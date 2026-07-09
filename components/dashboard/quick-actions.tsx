@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Banknote, Send, TrendingUp, UserPlus } from 'lucide-react'
+import { Banknote, Send, ClipboardCheck } from 'lucide-react'
 
 export default function QuickActions() {
   const router = useRouter()
@@ -25,22 +25,20 @@ export default function QuickActions() {
     },
     {
       id: 3,
-      title: 'Generate FX Quote',
-      description: 'Get current exchange rate quote',
-      icon: TrendingUp,
+      title: 'CNY Payout',
+      description: 'Get exchange rates and quotes',
+      icon: Send,
       color: 'bg-amber-50 text-amber-600',
-      onClick: () => {
-        console.log('[v0] Generate FX Quote clicked')
-      },
+      onClick: () => router.push('/cny-payout'),
     },
     {
       id: 4,
-      title: 'Add Supplier',
-      description: 'Register a new payment recipient',
-      icon: UserPlus,
-      color: 'bg-purple-50 text-purple-600',
+      title: 'Audit Reports & Compliance',
+      description: 'View compliance status and reports',
+      icon: ClipboardCheck,
+      color: 'bg-indigo-50 text-indigo-600',
       onClick: () => {
-        console.log('[v0] Add Supplier clicked')
+        console.log('[v0] Audit Reports & Compliance clicked')
       },
     },
   ]
