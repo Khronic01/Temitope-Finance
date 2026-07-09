@@ -46,7 +46,7 @@ export default function FinTechTopNav() {
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
-            <span className="text-sm font-medium text-foreground">Joshua LTD</span>
+            <span className="text-sm font-medium text-foreground">Temitope Finance</span>
             <ChevronDown className="w-4 h-4 text-muted-foreground" />
           </button>
         </div>

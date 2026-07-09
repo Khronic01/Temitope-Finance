@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import FinTechSidebar from '@/components/fintech-sidebar'
+import FinTechTopNav from '@/components/fintech-topnav'
 import { getTransactions, Transaction } from '@/lib/transaction-storage'
 import { TransactionFilters } from '@/components/transactions/transaction-filters'
 import { TransactionList } from '@/components/transactions/transaction-list'
@@ -37,20 +39,30 @@ export default function TransactionsPage() {
 
   if (isLoading) {
     return (
-      <main className="flex-1 overflow-auto p-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="animate-pulse space-y-4">
-            <div className="h-10 bg-muted rounded w-1/4"></div>
-            <div className="h-32 bg-muted rounded"></div>
-            <div className="h-96 bg-muted rounded"></div>
-          </div>
+      <div className="flex h-screen bg-background">
+        <FinTechSidebar />
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+          <FinTechTopNav />
+          <main className="flex-1 overflow-auto p-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="animate-pulse space-y-4">
+                <div className="h-10 bg-muted rounded w-1/4"></div>
+                <div className="h-32 bg-muted rounded"></div>
+                <div className="h-96 bg-muted rounded"></div>
+              </div>
+            </div>
+          </main>
         </div>
-      </main>
+      </div>
     )
   }
 
   return (
-    <main className="flex-1 overflow-auto p-8">
+    <div className="flex h-screen bg-background">
+      <FinTechSidebar />
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <FinTechTopNav />
+        <main className="flex-1 overflow-auto p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -102,6 +114,8 @@ export default function TransactionsPage() {
         {/* Transaction List */}
         <TransactionList transactions={filteredTransactions} />
       </div>
-    </main>
+        </main>
+      </div>
+    </div>
   )
 }

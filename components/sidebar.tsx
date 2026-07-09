@@ -23,7 +23,7 @@ export default function Sidebar() {
         <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-slate-600 to-slate-700 text-sm font-bold text-white">
           JL
         </div>
-        <p className="text-sm font-semibold text-white">Joshua LTD</p>
+        <p className="text-sm font-semibold text-white">Temitope Finance</p>
         <p className="text-xs text-slate-400">PRIMARY WALLET</p>
       </div>
     </aside>

@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboard,
@@ -28,6 +28,15 @@ const bottomItems = [
 
 export default function FinTechSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    // Clear any stored data
+    localStorage.clear()
+    sessionStorage.clear()
+    // Redirect to login page
+    router.push('/login')
+  }
 
   return (
     <aside className="w-64 border-r border-border bg-sidebar flex flex-col">
@@ -83,7 +92,10 @@ export default function FinTechSidebar() {
             </Link>
           )
         })}
-        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-muted transition-colors text-left">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-muted transition-colors text-left"
+        >
           <LogOut className="w-5 h-5" />
           <span className="text-sm font-medium">Logout</span>
         </button>
