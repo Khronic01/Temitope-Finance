@@ -1,0 +1,21 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "implement-cny-payout-flow",
+    "main",
+    "origin",
+    "v0/oluwatobiawoseso-6358-e77ac535"
+  ],
+  "parent": {
+    "implement-cny-payout-flow": "main",
+    "main": null,
+    "origin": "main",
+    "v0/oluwatobiawoseso-6358-e77ac535": "main"
+  },
+  "order": [
+    "main",
+    "implement-cny-payout-flow",
+    "origin",
+    "v0/oluwatobiawoseso-6358-e77ac535"
+  ]
+}
