@@ -36,7 +36,6 @@ export default function KYBStep2Page() {
     identityNumber: '',
     identityType: '',
     email: '',
-    phone: '',
   })
   const [idFile, setIdFile] = useState<File | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -58,7 +57,6 @@ export default function KYBStep2Page() {
     if (!formData.identityNumber) newErrors.identityNumber = 'Identity number is required'
     if (!formData.identityType) newErrors.identityType = 'Identity type is required'
     if (!formData.email) newErrors.email = 'Email is required'
-    if (!formData.phone) newErrors.phone = 'Phone number is required'
     if (!idFile) newErrors.idFile = 'Identity document is required'
 
     setErrors(newErrors)
@@ -149,17 +147,6 @@ export default function KYBStep2Page() {
           onChange={handleChange}
           placeholder="director@company.com"
           error={errors.email}
-          required
-        />
-
-        <FormInput
-          label="Phone Number"
-          name="phone"
-          type="tel"
-          value={formData.phone}
-          onChange={handleChange}
-          placeholder="+234..."
-          error={errors.phone}
           required
         />
 

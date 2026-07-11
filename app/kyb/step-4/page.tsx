@@ -13,6 +13,7 @@ interface KYBData {
   companyName?: string
   registrationNumber?: string
   industry?: string
+  customIndustry?: string
   businessType?: string
   address?: string
   website?: string
@@ -24,7 +25,6 @@ interface KYBData {
     identityType?: string
     identityNumber?: string
     email?: string
-    phone?: string
   }
   documents?: string[]
 }
@@ -119,7 +119,9 @@ export default function KYBStep4Page() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-muted-foreground">Industry</p>
-                <p className="font-medium text-foreground capitalize">{kybData.industry}</p>
+                <p className="font-medium text-foreground capitalize">
+                  {kybData.industry === 'other' ? kybData.customIndustry : kybData.industry}
+                </p>
               </div>
               <div>
                 <p className="text-muted-foreground">Business Type</p>
