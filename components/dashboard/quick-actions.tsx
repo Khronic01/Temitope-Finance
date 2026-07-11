@@ -25,14 +25,6 @@ export default function QuickActions() {
     },
     {
       id: 3,
-      title: 'CNY Payout',
-      description: 'Get exchange rates and quotes',
-      icon: Send,
-      color: 'bg-amber-50 text-amber-600',
-      onClick: () => router.push('/cny-payout'),
-    },
-    {
-      id: 4,
       title: 'Audit Reports & Compliance',
       description: 'View compliance status and reports',
       icon: ClipboardCheck,

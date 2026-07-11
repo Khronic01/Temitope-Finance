@@ -4,10 +4,11 @@ import { Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 interface PaymentProcessingProps {
+  estimatedSettlement: string
   onComplete: () => void
 }
 
-export default function PaymentProcessing({ onComplete }: PaymentProcessingProps) {
+export default function PaymentProcessing({ estimatedSettlement, onComplete }: PaymentProcessingProps) {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function PaymentProcessing({ onComplete }: PaymentProcessingProps
           </div>
           <div className="text-right">
             <p className="text-xs text-muted-foreground">Est. time remaining</p>
-            <p className="text-sm font-semibold text-foreground">2-6 business hours</p>
+            <p className="text-sm font-semibold text-foreground">{estimatedSettlement}</p>
           </div>
         </div>
 

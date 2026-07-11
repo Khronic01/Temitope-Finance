@@ -35,7 +35,7 @@ export default function FinTechSidebar() {
     localStorage.clear()
     sessionStorage.clear()
     // Redirect to login page
-    router.push('/login')
+    router.push('/auth/login')
   }
 
   return (

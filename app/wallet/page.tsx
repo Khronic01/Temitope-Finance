@@ -12,6 +12,11 @@ import { Download, Plus, ReceiptText, WalletCards } from 'lucide-react'
 
 export default function WalletPage() {
   const [isFundModalOpen, setIsFundModalOpen] = useState(false)
+  const [walletRefreshKey, setWalletRefreshKey] = useState(0)
+
+  const refreshWallet = () => {
+    setWalletRefreshKey((key) => key + 1)
+  }
 
   return (
     <div className="flex h-screen bg-background">
@@ -69,11 +74,11 @@ export default function WalletPage() {
               </div>
             </section>
 
-            <BalanceDisplay />
+            <BalanceDisplay refreshKey={walletRefreshKey} />
 
             <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
               <div className="xl:col-span-2">
-                <FundingHistory />
+                <FundingHistory refreshKey={walletRefreshKey} />
               </div>
               <div className="xl:col-span-3">
                 <TransactionHistory />
@@ -88,6 +93,7 @@ export default function WalletPage() {
       <FundWalletModal
         isOpen={isFundModalOpen}
         onClose={() => setIsFundModalOpen(false)}
+        onFunded={refreshWallet}
       />
     </div>
   )

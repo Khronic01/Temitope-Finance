@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface FormCheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string
+  label: React.ReactNode
   error?: string
 }
 

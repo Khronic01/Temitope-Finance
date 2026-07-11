@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import FinTechSidebar from '@/components/fintech-sidebar'
 import FinTechTopNav from '@/components/fintech-topnav'
@@ -50,6 +50,14 @@ const SAVED_RECIPIENTS = [
 const formatNGN = (value: number) => `NGN ${value.toLocaleString('en-NG', { maximumFractionDigits: 0 })}`
 const formatCNY = (value: number) => `CNY ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`
 
+const getEstimatedSettlement = (method: PaymentMethod) => {
+  if (method === 'bank') return '2-12 hours'
+  return '1-2 hours'
+}
+
+const createReference = () =>
+  `TMP-CNY-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.random().toString().slice(2, 6)}`
+
 export default function CNYPayoutPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('bank')
@@ -61,18 +69,40 @@ export default function CNYPayoutPage() {
   const [otp, setOtp] = useState('')
   const [complianceApproved, setComplianceApproved] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [reference, setReference] = useState(createReference)
 
   const quote = useMemo(() => {
     const platformFee = amount * PLATFORM_FEE_RATE
     const transferFee = BANK_FEE
     const totalFees = platformFee + transferFee
+    const convertedAmount = amount * EXCHANGE_RATE
     const recipientReceives = (amount - platformFee) * EXCHANGE_RATE
-    const totalDebit = amount + transferFee
+    const totalDebit = amount + totalFees
 
-    return { platformFee, transferFee, totalFees, recipientReceives, totalDebit }
+    return { platformFee, transferFee, totalFees, convertedAmount, recipientReceives, totalDebit }
   }, [amount])
 
-  const reference = `TMP-CNY-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.random().toString().slice(2, 6)}`
+  const estimatedSettlement = getEstimatedSettlement(paymentMethod)
+
+  useEffect(() => {
+    if (currentStep !== 6 || !complianceApproved) return
+
+    const timeout = window.setTimeout(() => {
+      setCurrentStep(7)
+    }, 1000)
+
+    return () => window.clearTimeout(timeout)
+  }, [complianceApproved, currentStep])
+
+  useEffect(() => {
+    if (currentStep !== 7 || !isProcessing) return
+
+    const timeout = window.setTimeout(() => {
+      setCurrentStep(8)
+    }, 800)
+
+    return () => window.clearTimeout(timeout)
+  }, [currentStep, isProcessing])
 
   const canGoNext = (): boolean => {
     switch (currentStep) {
@@ -118,6 +148,8 @@ export default function CNYPayoutPage() {
     setAmount(2500000)
     setOtp('')
     setComplianceApproved(false)
+    setIsProcessing(false)
+    setReference(createReference())
   }
 
   return (
@@ -192,6 +224,20 @@ export default function CNYPayoutPage() {
                       </button>
                     ))}
                   </div>
+                  <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-emerald-700">Equivalent in CNY</p>
+                        <p className="mt-1 text-2xl font-bold text-emerald-900">
+                          {formatCNY(quote.convertedAmount)}
+                        </p>
+                      </div>
+                      <div className="text-sm text-emerald-800 sm:text-right">
+                        <p>Rate: 1 NGN = {EXCHANGE_RATE.toFixed(5)} CNY</p>
+                        <p>Recipient receives after fee: {formatCNY(quote.recipientReceives)}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -217,9 +263,10 @@ export default function CNYPayoutPage() {
                     <ReviewRow label="Platform Fee" value={formatNGN(quote.platformFee)} />
                     <ReviewRow label="Transfer Fee" value={formatNGN(quote.transferFee)} />
                     <ReviewRow label="Total Debit" value={formatNGN(quote.totalDebit)} strong />
+                    <ReviewRow label="Equivalent in CNY" value={formatCNY(quote.convertedAmount)} />
                     <ReviewRow label="Recipient Receives (CNY)" value={formatCNY(quote.recipientReceives)} highlight />
                     <ReviewRow label="Exchange Rate" value={`1 NGN = ${EXCHANGE_RATE.toFixed(5)} CNY`} />
-                    <ReviewRow label="Estimated Settlement" value="2-6 business hours" />
+                    <ReviewRow label="Estimated Settlement" value={estimatedSettlement} />
                   </div>
                 </div>
               )}
@@ -251,13 +298,13 @@ export default function CNYPayoutPage() {
                 <ComplianceScreening
                   onComplete={(approved) => {
                     setComplianceApproved(approved)
-                    setTimeout(() => next(), 1000)
                   }}
                 />
               )}
 
               {currentStep === 7 && (
                 <PaymentProcessing
+                  estimatedSettlement={estimatedSettlement}
                   onComplete={() => {
                     setIsProcessing(true)
                   }}
@@ -273,6 +320,7 @@ export default function CNYPayoutPage() {
                   amountCNY={quote.recipientReceives}
                   exchangeRate={EXCHANGE_RATE}
                   totalFees={quote.totalFees}
+                  estimatedSettlement={estimatedSettlement}
                   isNewRecipient={true}
                   onNewPayment={resetFlow}
                 />

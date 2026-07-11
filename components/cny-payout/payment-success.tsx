@@ -15,6 +15,7 @@ interface PaymentSuccessProps {
   amountCNY: number
   exchangeRate: number
   totalFees: number
+  estimatedSettlement: string
   isNewRecipient: boolean
   onNewPayment?: () => void
 }
@@ -30,6 +31,7 @@ export default function PaymentSuccess({
   amountCNY,
   exchangeRate,
   totalFees,
+  estimatedSettlement,
   isNewRecipient,
   onNewPayment,
 }: PaymentSuccessProps) {
@@ -47,7 +49,7 @@ export default function PaymentSuccess({
       currency: 'CNY',
       status: 'completed',
       recipientName: recipient.name,
-      recipientBank: recipient.bank || 'Alipay/WeChat',
+      recipientBank: recipient.bankName || 'Alipay/WeChat',
       accountNumber: recipient.accountNumber,
       paymentMethod: paymentMethodMap[paymentMethod],
       exchangeRate,
@@ -113,7 +115,7 @@ export default function PaymentSuccess({
 
         <div className="mt-6 pt-6 border-t border-border">
           <p className="text-xs font-semibold uppercase text-muted-foreground">Estimated Settlement</p>
-          <p className="mt-1 font-semibold text-foreground">2-6 business hours</p>
+          <p className="mt-1 font-semibold text-foreground">{estimatedSettlement}</p>
         </div>
       </div>
 

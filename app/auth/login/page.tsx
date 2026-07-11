@@ -34,9 +34,9 @@ export default function LoginPage() {
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
-      if (formData.email && formData.password) {
+      if (formData.email.trim() && formData.password.trim()) {
         // Simulate successful login
-        router.push('/dashboard')
+        router.replace('/dashboard')
       } else {
         setError('Please fill in all fields')
       }

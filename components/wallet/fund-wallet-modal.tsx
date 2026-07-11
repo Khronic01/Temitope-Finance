@@ -7,6 +7,7 @@ import { addTransaction } from '@/lib/transaction-storage'
 interface FundWalletModalProps {
   isOpen: boolean
   onClose: () => void
+  onFunded?: () => void
 }
 
 const PRESETS = [
@@ -16,7 +17,7 @@ const PRESETS = [
   { label: '₦10M', value: 10000000 },
 ]
 
-export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProps) {
+export default function FundWalletModal({ isOpen, onClose, onFunded }: FundWalletModalProps) {
   const [step, setStep] = useState<'amount' | 'review' | 'processing' | 'success'>('amount')
   const [amount, setAmount] = useState<number | string>('')
   const [selectedPreset, setSelectedPreset] = useState<number | null>(null)
@@ -38,21 +39,9 @@ export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProp
     setStep('review')
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setStep('processing')
-
-    // Simulate processing steps
-    const messages = [
-      'Initiating transfer...',
-      'Verifying bank details...',
-      'Processing payment...',
-      'Confirming transaction...',
-    ]
-
-    for (let i = 0; i < messages.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, 800))
-      setProcessingMessage(messages[i])
-    }
+    setProcessingMessage('Crediting wallet instantly...')
 
     // Add transaction to storage
     const fundingAmount = typeof amount === 'string' ? parseInt(amount) : amount
@@ -67,6 +56,7 @@ export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProp
       paymentMethod: 'Bank Transfer',
     })
 
+    onFunded?.()
     setStep('success')
   }
 
@@ -168,8 +158,8 @@ export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProp
 
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-sm text-blue-900">
-                  Funds will be credited to your wallet within 1-2 business days. You will receive
-                  a confirmation email once the transfer is complete.
+                  Funds are credited to your wallet instantly and your available balance updates
+                  immediately after confirmation.
                 </p>
               </div>
 
@@ -211,11 +201,10 @@ export default function FundWalletModal({ isOpen, onClose }: FundWalletModalProp
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
-                  Funding Initiated Successfully
+                  Wallet Funded Successfully
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  ₦{totalAmount.toLocaleString()} has been processed. You will receive a confirmation
-                  email shortly.
+                  ₦{fundingAmount.toLocaleString()} has been credited to your available balance instantly.
                 </p>
               </div>
 
