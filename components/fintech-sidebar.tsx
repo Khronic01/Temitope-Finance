@@ -12,6 +12,7 @@ import {
   Settings,
   LogOut,
 } from 'lucide-react'
+import { clearAuthSession } from '@/lib/auth-session'
 
 const menuItems = [
   { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
@@ -31,9 +32,7 @@ export default function FinTechSidebar() {
   const router = useRouter()
 
   const handleLogout = () => {
-    // Clear any stored data
-    localStorage.clear()
-    sessionStorage.clear()
+    clearAuthSession()
     // Redirect to login page
     router.push('/auth/login')
   }

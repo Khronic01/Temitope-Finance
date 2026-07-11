@@ -39,6 +39,7 @@ export default function KYBStep1Page() {
     companyName: '',
     registrationNumber: '',
     industry: '',
+    customIndustry: '',
     businessType: '',
     address: '',
     website: '',
@@ -60,6 +61,9 @@ export default function KYBStep1Page() {
     if (!formData.companyName) newErrors.companyName = 'Company name is required'
     if (!formData.registrationNumber) newErrors.registrationNumber = 'Registration number is required'
     if (!formData.industry) newErrors.industry = 'Industry is required'
+    if (formData.industry === 'other' && !formData.customIndustry.trim()) {
+      newErrors.customIndustry = 'Please enter your industry'
+    }
     if (!formData.businessType) newErrors.businessType = 'Business type is required'
     if (!formData.address) newErrors.address = 'Address is required'
     if (!formData.turnover) newErrors.turnover = 'Annual turnover is required'
@@ -122,6 +126,18 @@ export default function KYBStep1Page() {
           error={errors.industry}
           required
         />
+
+        {formData.industry === 'other' && (
+          <FormInput
+            label="Enter Industry"
+            name="customIndustry"
+            value={formData.customIndustry}
+            onChange={handleChange}
+            placeholder="Describe your industry"
+            error={errors.customIndustry}
+            required
+          />
+        )}
 
         <FormSelect
           label="Business Type"
