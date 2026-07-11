@@ -6,6 +6,7 @@ import Link from 'next/link'
 import AuthLayout from '@/components/auth/auth-layout'
 import FormInput from '@/components/form/form-input'
 import FormCheckbox from '@/components/form/form-checkbox'
+import { saveAuthSession } from '@/lib/auth-session'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -36,6 +37,7 @@ export default function LoginPage() {
 
       if (formData.email.trim() && formData.password.trim()) {
         // Simulate successful login
+        saveAuthSession(formData.email.trim(), formData.rememberMe)
         router.replace('/dashboard')
       } else {
         setError('Please fill in all fields')
